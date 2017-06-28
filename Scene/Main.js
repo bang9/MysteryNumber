@@ -7,39 +7,35 @@ import {
     Text,
     View,
     Alert,
-    TouchableOpacity
-
+    TouchableOpacity,
+    Image
 } from 'react-native';
 import {Actions} from "react-native-router-flux";
-import Contacts from 'react-native-contacts';
 import Button from '../Components/Button';
 
 
 class Main extends Component {
-        render(){
+    render(){
         return(
-            <View style ={{ flex : 1, justifyContent : "center"}}>
-                <View style={{margin:15}}>
-                    <Button
-                        title="직접 선택"
-                        color="#78CDF7"
-                        onPress = {()=>Actions.main()}
+            <View style ={{flex : 1, justifyContent : "center"}}>
+                <View style={{alignSelf:'center',marginBottom:100,}} >
+                    <Image
+                        style={{width:230,height:100,}}
+                        source={require('../img/logo.png')}
+                        resizeMode={Image.resizeMode.contain}
                     />
                 </View>
 
-                <View style ={{margin :15 }}>
-                    <Button
-                        onPress={()=>this.moveToRandom()} //binding
-                        title="랜덤 선택"
-                        color="#43F6F6"
-                    />
-                </View>
+                <Button
+                    title="직접 선택"
+                    color="#6699fb"
+                    onPress = {()=>Alert.alert("Notice","준비중")}  />
+                <Button
+                    title="랜덤 선택"
+                    color="#85f099"
+                    onPress={()=>Actions.random({rightButton:true})}  />
             </View>
         );
-    }
-
-    moveToRandom(){
-        Actions.random();
     }
 }
 export default Main;

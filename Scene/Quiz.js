@@ -15,19 +15,26 @@ import {
 import { Actions } from 'react-native-router-flux'; // New code
 
 class Quiz extends Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            selectedContacts : null
+        }
+    }
 
     render() {
-        console.log(global.select);
+        console.log(global.selectedContacts);
         return (
             <View>
-                <Text>{this.quizItem().givenName}</Text>
+                <Text>{this.getQuizItem().givenName}</Text>
             </View>
         );
     }
 
-    quizItem (){
+    getQuizItem (){
         var num = Math.floor(Math.random()*30);
-        return global.select[num];
+        return global.selectedContacts[num];
+        //return this.props.selectedList[num];
     }
 }
 

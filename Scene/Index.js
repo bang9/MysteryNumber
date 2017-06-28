@@ -8,7 +8,8 @@ import {
     Text,
     View,
     Platform,
-    TouchableOpacity
+    TouchableOpacity,
+    Image
 } from 'react-native';
 
 
@@ -16,59 +17,83 @@ import {Router,Scene, Actions} from "react-native-router-flux";
 import Main from './Main';
 import Quiz from './Quiz';
 import RandomPage from './RandomPage';
-global.select = null;
+
+global.selectedContacts = null;
 
 class App extends Component {
+    constructor(props){
+        super(props)
+        this.state={
+            rightButton : false
+        }
+    }
     render(){
         return(
             <Router navigationBarStyle={styles.navBar}
-            sceneStyle = {styles.scene}
+                    sceneStyle = {styles.scene}
+                    titleStyle={styles.title}
             >
+
                 <Scene key="root">
                     <Scene
-                        hideNavBar={true}
-                        sceneStyle ={{marginTop:0}}
                         key="main"
                         component={Main}
+                        hideNavBar={true}
+                        sceneStyle ={{marginTop:0}}
                         initial={true}
                     />
 
                 </Scene>
 
                 <Scene
-                    renderRightButton = {() => this.rightButton()}
-                    hideNavBar={false}
                     key="random"
                     component={RandomPage}
                     title="랜덤 목록"
-
+                    hideNavBar={false}
+                    renderRightButton = {()=>this.moveQuizButton("확인")}
+                    renderBackButton = {()=>this.backButton()}
                 />
 
                 <Scene
-                    hideNavBar={false}
                     key="quiz"
                     component={Quiz}
                     title="퀴즈"
-                    renderBackButton ={ () => null}
+                    hideNavBar={false}
+                    renderBackButton ={()=>null}
                 />
 
             </Router>
         )
     }
-    rightButton(){
+
+    moveQuizButton(text){
+        let selectedList = global.selectedContacts;
         return (
-            <TouchableOpacity onPress={()=>Actions.quiz()}>
-                <Text>확인</Text>
+            <TouchableOpacity
+                onPress={()=>Actions.quiz({selectedList:selectedList})}
+                style={{justifyContent:'center', width:50,bottom:11,height:40}}>
+                <Text style={{color:'white', fontSize:16, textAlign:'right'}}>{text}</Text>
             </TouchableOpacity>
         );
+    }
+    backButton(){
+        return (
+            <TouchableOpacity
+            onPress={()=>Actions.pop()}
+            style={{}}>
+                <Image
+                    style={{width:25,height:25,}}
+                    source={require('../img/backButton.png')}
+                    resizeMode={Image.resizeMode.contain}
+                />
+            </TouchableOpacity>
+        )
     }
 }
 
 const styles = StyleSheet.create({
     navBar:{
-        backgroundColor : "#00f100",
-        borderBottomWidth:0,
-        borderBottomColor : "#fff"
+        backgroundColor : "#00a5f7",
     },
     welcome: {
         fontSize: 20,
@@ -79,6 +104,11 @@ const styles = StyleSheet.create({
     scene: {
         flex :1,
         marginTop : (Platform.OS === 'ios') ? 64 : 54
+    },
+    title: {
+        fontSize: 17,
+        fontWeight: "600",
+        color:'white',
     }
 });
 

@@ -7,8 +7,10 @@ import {
     Text,
     View,
     Dimensions,
-    FlatList
-
+    FlatList,
+    ScrollView,
+    Alert,
+    RefreshControl
 } from 'react-native';
 import Router from "react-native-router-flux/src/Router";
 import Contacts from "react-native-contacts"
@@ -25,13 +27,46 @@ class RandomPage extends Component {
         this.state=
             {
                 contacts : null,
-                seletedData : []
+                selectedList : [],
+                refreshing:false,
             }
     }
-
     componentWillMount(){
         this.getContact();
     }
+
+    render() {
+        return (
+            <ScrollView style={styles.container}
+                        refreshControl={
+                            <RefreshControl
+                                refreshing={this.state.refreshing}
+                                onRefresh={()=>this._onRefresh()}
+                            />
+                        }>
+                <Button
+                    onPress={() => this._onRefresh()} //binding
+                    title="재선택"
+                    color="#488aff"
+                />
+                <FlatList
+                    data={this.state.selectedList}
+                    renderItem={({item}) => item.phoneNumbers[0] != null ?
+                    <SelectedItem name={item.givenName} number={item.phoneNumbers[0].number}/>
+                    :
+                    null}
+                    keyExtractor={item=>item.givenName} // keyExtractor -> inform each of items primary key
+                    />
+            </ScrollView>
+        );
+    }
+
+    //function Lists
+    _onRefresh(){
+        this.setState({refreshing: true});
+        this.selectData();
+    }
+
     getContact() {
         Contacts.getAll((err, contact) => {
             console.log("Contact.getAll");
@@ -39,71 +74,43 @@ class RandomPage extends Component {
                 Alert.alert("error");
             } else {
                 this.setState({contacts:contact})
-                this.selectData();
+                this._onRefresh();
             }
         })
     }
 
     selectData(){
-        let arr = [];
-
+        let selectedContacts = [];                          // Selected data Array
+        let tmpContacts = this.state.contacts.slice();   // Copy contacts
         for(var i=0; i<30; i++) {
-            let rnd = Math.floor(Math.random()*this.state.contacts.length);
-            arr.push(this.state.contacts[rnd]);
-            let tmp = this.state.contacts;
-            tmp.splice(rnd,1);
-            this.setState({contacts:tmp})
+            let rnd = Math.floor(Math.random()*tmpContacts.length); // Get random index
+            selectedContacts.push(tmpContacts[rnd]);                  // Push selected data to Array
+            tmpContacts.splice(rnd,1);                                // Remove selected data at tmpContacts
         }
-        this.setState({selectedData:arr});
-        global.select = arr;
-    }
-
-    render() {
-        return (
-            <View style={styles.container}>
-                <Button
-                    onPress={()=>this.selectData()} //binding
-                    title="재선택"
-                    color="#43F6F6"
-                />
-                <FlatList
-                    data = {this.state.selectedData}
-                    renderItem ={({item}) => item.phoneNumbers[0] != null ?<Text>{item.givenName + "  " + item.phoneNumbers[0].number}</Text>
-                    : null}
-                />
-
-            </View>
-        );
-    }
-
-    test(){
-        console.log(this.state.selectedData);
+        global.selectedContacts = selectedContacts;                // Update global selected data
+        this.setState({selectedList:selectedContacts,refreshing: false});            // Set state for new data
     }
 }
 
-
-
-class Buttontest extends Component{
-    render(){
-        const test = this.props.parent;
-        return(
-            <View>
-                <TouchableOpacity style={{backgroundColor :"#fff"}}
-                                  onPress ={()=>{test.setState({test:test.state.test+1})}}>
-                    <Text>{test.state.test}</Text>
-                </TouchableOpacity>
+class SelectedItem extends Component {
+    render() {
+        return (
+            <View style={styles.selectedContainer}>
+                <View style={{flex:1,alignItems:'flex-start'}}>
+                    <Text style={{fontSize:16, marginLeft:17, fontWeight:'400',color:'black'}}>{this.props.name}</Text>
+                </View>
+                <View style={{flex:1,alignItems:'flex-end'}}>
+                    <Text style={{marginRight:17}}>{this.props.number}</Text>
+                </View>
             </View>
-        )
+        );
     }
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop:53,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#bb0000',
+        backgroundColor: '#fff',
     },
     welcome: {
         fontSize: 20,
@@ -111,6 +118,13 @@ const styles = StyleSheet.create({
         margin: 10,
         color: '#ffffff',
     },
+    selectedContainer:{
+        flex:1,
+        height:60,
+        borderColor:'#dddf',
+        borderWidth:0.3,alignItems:'center',
+        flexDirection:'row'
+    }
 });
 
 export default RandomPage;
