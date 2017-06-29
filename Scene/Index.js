@@ -70,7 +70,7 @@ class App extends Component {
         let selectedList = global.selectedContacts;
         return (
             <TouchableOpacity
-                onPress={()=>Actions.quiz({selectedList:selectedList})}
+                onPress={()=>Actions.quiz({selectedList:selectedList,score:0})}
                 style={{justifyContent:'center', width:50,bottom:11,height:40}}>
                 <Text style={{color:'white', fontSize:16, textAlign:'right'}}>{text}</Text>
             </TouchableOpacity>

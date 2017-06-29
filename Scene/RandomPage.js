@@ -52,7 +52,7 @@ class RandomPage extends Component {
                 <FlatList
                     data={this.state.selectedList}
                     renderItem={({item}) => item.phoneNumbers[0] != null ?
-                    <SelectedItem name={item.givenName} number={item.phoneNumbers[0].number}/>
+                    <SelectedItem name={this.reNaming(item)} number={item.phoneNumbers[0].number}/>
                     :
                     null}
                     keyExtractor={item=>item.givenName} // keyExtractor -> inform each of items primary key
@@ -77,6 +77,15 @@ class RandomPage extends Component {
                 this._onRefresh();
             }
         })
+    }
+
+    reNaming(item){
+        let fName = item.familyName
+        let gName = item.givenName
+        let fullName = ""
+        if(fName!=null) fullName+=fName
+        if(gName!=null) fullName+=gName
+        return fullName
     }
 
     selectData(){
