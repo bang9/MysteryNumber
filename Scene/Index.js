@@ -17,6 +17,7 @@ import {Router,Scene, Actions} from "react-native-router-flux";
 import Main from './Main';
 import Quiz from './Quiz';
 import RandomPage from './RandomPage';
+import Test from './Test';
 
 global.selectedContacts = null;
 
@@ -62,6 +63,12 @@ class App extends Component {
                     renderBackButton ={()=>null}
                 />
 
+                <Scene
+                    key="firebase"
+                    component={Test}
+                    title="firebase test"
+                />
+
             </Router>
         )
     }
@@ -79,8 +86,8 @@ class App extends Component {
     backButton(){
         return (
             <TouchableOpacity
-            onPress={()=>Actions.pop()}
-            style={{}}>
+                onPress={()=>Actions.pop()}
+                style={{}}>
                 <Image
                     style={{width:25,height:25,}}
                     source={require('../img/backButton.png')}

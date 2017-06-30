@@ -52,3 +52,12 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots
 buildKey.jks
+android/app/src/main/res/drawable-hdpi/node_modules_reactnativeexperimentalnavigation_assets_back.png
+android/app/src/main/res/drawable-mdpi/img_backbutton.png
+android/app/src/main/res/drawable-mdpi/img_logo.png
+android/app/src/main/res/drawable-mdpi/node_modules_reactnativeexperimentalnavigation_assets_back.png
+android/app/src/main/res/drawable-mdpi/node_modules_reactnativerouterflux_src_back_chevron.png
+android/app/src/main/res/drawable-mdpi/node_modules_reactnativerouterflux_src_menu_burger.png
+android/app/src/main/res/drawable-xhdpi/node_modules_reactnativeexperimentalnavigation_assets_back.png
+android/app/src/main/res/drawable-xxhdpi/node_modules_reactnativeexperimentalnavigation_assets_back.png
+android/app/src/main/res/drawable-xxxhdpi/node_modules_reactnativeexperimentalnavigation_assets_back.png

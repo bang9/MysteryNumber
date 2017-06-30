@@ -29,7 +29,7 @@ class Main extends Component {
                 <Button
                     title="직접 선택"
                     color="#6699fb"
-                    onPress = {()=>Alert.alert("Notice","준비중")}  />
+                    onPress = {__DEV__? ()=>Actions.firebase() : ()=>Alert.alert("Notice","준비중") }  />
                 <Button
                     title="랜덤 선택"
                     color="#85f099"

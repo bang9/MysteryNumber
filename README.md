@@ -100,3 +100,9 @@ android/app/build.gradle에서 아래 옵션을 true로 변경하면 된다.
             minifyEnabled true
         }
     }
+
+
+------------FIRE BASE 참고
+
+https://medium.com/react-native-development/build-a-chat-app-with-firebase-and-redux-part-1-8a2197fb0f88
+https://medium.com/@jamesmarino/getting-started-with-react-native-and-firebase-ab1f396db549
