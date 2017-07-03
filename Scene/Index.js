@@ -18,6 +18,7 @@ import Main from './Main';
 import Quiz from './Quiz';
 import RandomPage from './RandomPage';
 import Test from './Test';
+import DirectSelect from './DirectSelect';
 
 global.selectedContacts = null;
 
@@ -67,6 +68,11 @@ class App extends Component {
                     key="firebase"
                     component={Test}
                     title="firebase test"
+                />
+                <Scene
+                    key="DirectSelect"
+                    component={DirectSelect}
+                    title="직접 선택"
                 />
 
             </Router>
