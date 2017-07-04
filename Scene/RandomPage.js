@@ -74,6 +74,7 @@ class RandomPage extends Component {
                 Alert.alert("error");
             } else {
                 this.setState({contacts:contact})
+                global.allContacts = contact;
                 this._onRefresh();
             }
         })

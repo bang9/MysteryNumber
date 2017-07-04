@@ -1,11 +1,6 @@
 /**
- * Created by mycom on 2017-06-28.
+ * Created by mycom on 2017-07-04.
  */
-/**
- * Created by mycom on 2017-06-28.
- */
-// app/ScarletScreen.js
-
 import React, { Component } from 'react';
 import {
     StyleSheet,
@@ -16,11 +11,13 @@ import {
 } from 'react-native';
 import { Actions } from 'react-native-router-flux'; // New code
 import Button from "../Components/Button";
+import Router from "react-native-router-flux/src/Router";
+import Test from "./Test";
 
 let result = null;
 let chart = [];
 
-class Quiz extends Component {
+class DirectQuiz extends Component {
     constructor(props){
         super(props)
         this.state = {
@@ -30,10 +27,10 @@ class Quiz extends Component {
             score:this.props.score,
             showingCorrect:false,
             showingIncorrect:false,
+            success : false,
         }
     }
     componentWillMount(){
-        console.log(global.selectedContacts);
         this.getQuizItem();
     }
 
@@ -42,12 +39,13 @@ class Quiz extends Component {
     }
 
     render() {
-        let fName = this.state.quizList[this.state.answer].familyName
-        let gName = this.state.quizList[this.state.answer].givenName
+        let fName = this.state.answer.familyName
+        let gName = this.state.answer.givenName
+        console.log("Quiz List :", this.state.quizList)
+        console.log("남은 문제 :", global.directSeletedContacts )
         let fullName = ""
         if(fName!=null) fullName+=fName
         if(gName!=null) fullName+=gName
-
         return (
             <View style={{flex:1}}>
                 <View style={{justifyContent:'center',alignItems:'center',flex:1}}>
@@ -55,23 +53,25 @@ class Quiz extends Component {
                     <Text style={{fontSize:55}}>{fullName}</Text>
                 </View>
                 <View style ={{justifyContent : "center",flex:1,marginBottom:20}}>
+
                     <Button
                         title={this.state.quizList[0].phoneNumbers[0].number}
-                        onPress={()=>this.checkIndex(0)}
+                        onPress={()=>this.checkIndex(this.state.quizList[0].phoneNumbers[0].number)}
                         color="#ff000088"
                     />
 
                     <Button
                         title={this.state.quizList[1].phoneNumbers[0].number}
-                        onPress={()=>this.checkIndex(1)}
+                        onPress={()=>this.checkIndex(this.state.quizList[1].phoneNumbers[0].number)}
                         color="#ff000088"
                     />
 
                     <Button
                         title={this.state.quizList[2].phoneNumbers[0].number}
-                        onPress={()=>this.checkIndex(2)}
+                        onPress={()=>this.checkIndex(this.state.quizList[2].phoneNumbers[0].number)}
                         color="#ff000088"
                     />
+
                 </View>
                 {
                     this.state.showingCorrect &&
@@ -82,12 +82,10 @@ class Quiz extends Component {
                     <Text style={{position: 'absolute', left:Dimensions.get('window').width/5,fontSize: 350}}>X</Text>
                 }
             </View>
-
-
         );
     }
     checkIndex(answer){
-        answer==this.state.answer ? this.renderCorrect(true): this.renderCorrect(false)
+        answer==this.state.answer.phoneNumbers[0].number ? this.renderCorrect(true): this.renderCorrect(false)
     }
 
     renderCorrect(bool) {
@@ -95,7 +93,6 @@ class Quiz extends Component {
             this.setState({showingCorrect: true})
             this.setState({showingCorrect: false})
             Actions.refresh({score: this.state.score + 10})
-
         } else{
             this.setState({showingIncorrect: true})
             this.setState({showingIncorrect: false})
@@ -103,22 +100,35 @@ class Quiz extends Component {
     }
 
     getQuizItem () {
-        let temp = global.selectedContacts.slice();
+        if(global.directSeletedContacts.length==0){
+            console.log("asdfljasdlfjlsdfj;lasdjf;")
+        }
+
         let tmpAnswer = [];
-        let rnd =temp[Math.floor(Math.random() * temp.length)];
-        tmpAnswer.push(temp[rnd]);
-        temp.splice(rnd,1);
+        let rnd =Math.floor(Math.random() * global.directSeletedContacts.length);
+        let choiceAnswer =global.directSeletedContacts[rnd];
+        tmpAnswer.push(global.directSeletedContacts[rnd]);
 
-         for (var i = 0; i < 3; i++) {
-             var num = Math.floor(Math.random() * temp.length);
-             tmpAnswer.push(temp[num]);
-             temp.splice(num,1);
-         }
+        global.directSeletedContacts.splice(rnd,1);
 
-         this.setState({quizList:tmpAnswer, answer:Math.floor(Math.random() * 3)});
+        for(var i =0; i<2; i++) {
+            var num = Math.floor(Math.random() * global.allContacts.length);
+            tmpAnswer.push(global.allContacts[num]);
+        }
+
+        let choice = [];
+
+        for (var i = 0; i < 3; i++) {
+            var num = Math.floor(Math.random() * tmpAnswer.length);
+
+            choice.push(tmpAnswer[num]);
+            tmpAnswer.splice(num,1);
+
+        }
+
+        this.setState({quizList:choice, answer:choiceAnswer});
     }
 }
-
 
 
 const styles = StyleSheet.create({
@@ -136,4 +146,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Quiz;
+export default DirectQuiz;

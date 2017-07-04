@@ -49,7 +49,9 @@ class DirectSelect extends Component {
                     renderItem={({item,index}) => item.phoneNumbers[0] != null ?
                         <SelectedItem
                             name={this.reNaming(item)} number={item.phoneNumbers[0].number}
-                        select = {(selectedProps) =>!selectedProps?this.addSelectedList(item):this.removeSelectedList(item,this.state.selectedList)} isSelected={false} ref={"Item"+index}
+                            select = {(selectedProps) =>!selectedProps?this.addSelectedList(item):this.removeSelectedList(item,this.state.selectedList)}
+                            isSelected={false}
+                            ref={"Item"+index}
                         />
                         : null}
                     keyExtractor={item => item.givenName} // keyExtractor -> inform each of items primary key
@@ -59,12 +61,15 @@ class DirectSelect extends Component {
     }
 
     addSelectedList(item){
-        console.log("addSELECLTEDLIST")
         let arr = this.state.selectedList.slice();
         console.log("ARR:",arr);
         arr.push(item);
         console.log("PUSHED:",arr);
         this.setState({selectedList:arr});
+        console.log("asdfsdf",arr)
+        global.directSeletedContacts = arr;
+        console.log("asdfsdf",this.state.selectedList)
+
     }
 
     removeSelectedList(item,selList){
@@ -95,6 +100,7 @@ class DirectSelect extends Component {
                 Alert.alert("error");
             } else {
                 this.setState({contacts:contact})
+                global.allContacts = contact;
             }
         })
     }
