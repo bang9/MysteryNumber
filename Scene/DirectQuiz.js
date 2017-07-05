@@ -41,8 +41,6 @@ class DirectQuiz extends Component {
     render() {
         let fName = this.state.answer.familyName
         let gName = this.state.answer.givenName
-        console.log("Quiz List :", this.state.quizList)
-        console.log("남은 문제 :", global.directSeletedContacts )
         let fullName = ""
         if(fName!=null) fullName+=fName
         if(gName!=null) fullName+=gName

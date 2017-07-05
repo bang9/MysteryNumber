@@ -42,8 +42,8 @@ class Quiz extends Component {
     }
 
     render() {
-        let fName = this.state.quizList[this.state.answer].familyName
-        let gName = this.state.quizList[this.state.answer].givenName
+        let fName = this.state.answer.familyName
+        let gName = this.state.answer.givenName;
         let fullName = ""
         if(fName!=null) fullName+=fName
         if(gName!=null) fullName+=gName
@@ -57,19 +57,19 @@ class Quiz extends Component {
                 <View style ={{justifyContent : "center",flex:1,marginBottom:20}}>
                     <Button
                         title={this.state.quizList[0].phoneNumbers[0].number}
-                        onPress={()=>this.checkIndex(0)}
+                        onPress={()=>this.checkIndex(this.state.quizList[0].phoneNumbers[0].number)}
                         color="#ff000088"
                     />
 
                     <Button
                         title={this.state.quizList[1].phoneNumbers[0].number}
-                        onPress={()=>this.checkIndex(1)}
+                        onPress={()=>this.checkIndex(this.state.quizList[1].phoneNumbers[0].number)}
                         color="#ff000088"
                     />
 
                     <Button
                         title={this.state.quizList[2].phoneNumbers[0].number}
-                        onPress={()=>this.checkIndex(2)}
+                        onPress={()=>this.checkIndex(this.state.quizList[2].phoneNumbers[0].number)}
                         color="#ff000088"
                     />
                 </View>
@@ -87,7 +87,7 @@ class Quiz extends Component {
         );
     }
     checkIndex(answer){
-        answer==this.state.answer ? this.renderCorrect(true): this.renderCorrect(false)
+        answer==this.state.answer.phoneNumbers[0].number ? this.renderCorrect(true): this.renderCorrect(false)
     }
 
     renderCorrect(bool) {
@@ -103,19 +103,30 @@ class Quiz extends Component {
     }
 
     getQuizItem () {
-        let temp = global.selectedContacts.slice();
-        let tmpAnswer = [];
-        let rnd =temp[Math.floor(Math.random() * temp.length)];
-        tmpAnswer.push(temp[rnd]);
-        temp.splice(rnd,1);
+        if(global.selectedContacts.length==0){
+            console.log("asdfljasdlfjlsdfj;lasdjf;")
+        }
 
-         for (var i = 0; i < 3; i++) {
-             var num = Math.floor(Math.random() * temp.length);
-             tmpAnswer.push(temp[num]);
-             temp.splice(num,1);
+        let tmpAnswer = [];
+        let rnd =Math.floor(Math.random() * global.selectedContacts.length);
+        let choiceAnswer = global.selectedContacts[rnd];
+        tmpAnswer.push(global.selectedContacts[rnd]);
+        global.selectedContacts.splice(rnd,1)
+
+        for(var i =0; i<2; i++) {
+            var num = Math.floor(Math.random() * global.allContacts.length);
+            tmpAnswer.push(global.allContacts[num]);
+        }
+
+        let choice = [];
+
+        for (var i = 0; i < 3; i++) {
+             var num = Math.floor(Math.random() * tmpAnswer.length);
+             choice.push(tmpAnswer[num]);
+             tmpAnswer.splice(num,1);
          }
 
-         this.setState({quizList:tmpAnswer, answer:Math.floor(Math.random() * 3)});
+         this.setState({quizList:choice, answer:choiceAnswer});
     }
 }
 
