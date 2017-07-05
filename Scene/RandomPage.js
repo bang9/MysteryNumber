@@ -92,7 +92,7 @@ class RandomPage extends Component {
     selectData(){
         let selectedContacts = [];                          // Selected data Array
         let tmpContacts = this.state.contacts.slice();   // Copy contacts
-        for(var i=0; i<5; i++) {
+        for(var i=0; i<30; i++) {
             let rnd = Math.floor(Math.random()*tmpContacts.length); // Get random index
             selectedContacts.push(tmpContacts[rnd]);                  // Push selected data to Array
             tmpContacts.splice(rnd,1);                                // Remove selected data at tmpContacts

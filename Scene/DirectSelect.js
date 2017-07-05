@@ -66,10 +66,7 @@ class DirectSelect extends Component {
         arr.push(item);
         console.log("PUSHED:",arr);
         this.setState({selectedList:arr});
-        console.log("asdfsdf",arr)
-        global.directSeletedContacts = arr;
-        console.log("asdfsdf",this.state.selectedList)
-
+        global.directSelectedContacts = arr;  //global.directSelectedContacts => direct selected Data
     }
 
     removeSelectedList(item,selList){
@@ -100,15 +97,10 @@ class DirectSelect extends Component {
                 Alert.alert("error");
             } else {
                 this.setState({contacts:contact})
-                global.allContacts = contact;
+                global.allContacts = contact;   //global.allContacts => Contacts all input
             }
         })
     }
-
-    saveData(name){
-        firebase.database().ref('/users/test').update(name)
-    }
-
 }
 
 class SelectedList extends Component {
@@ -118,7 +110,7 @@ class SelectedList extends Component {
                 <FlatList
                 data={this.props.list}
                 renderItem={({item}) => item.phoneNumbers[0] != null ?
-                    <View><Text>{this.reNaming(item)}</Text></View>
+                    <View><Text>{this.reNaming(item)+" "}</Text></View>
                     : null}
                 keyExtractor={item => item.givenName} // keyExtractor -> inform each of items primary key
                 horizontal={true}

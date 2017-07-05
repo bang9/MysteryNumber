@@ -22,7 +22,7 @@ import Test from './Test';
 import DirectSelect from './DirectSelect';
 
 global.selectedContacts = null;   //random 30 quizlist
-global.directSeletedContacts=null; //directselect quizlist
+global.directSelectedContacts=null; //directselect quizlist
 global.allContacts = null; //all contacts list
 
 class App extends Component {
@@ -39,7 +39,7 @@ class App extends Component {
                     titleStyle={styles.title}
             >
 
-                <Scene key="root">
+                <Scene key="root" >
                     <Scene
                         key="main"
                         component={Main}

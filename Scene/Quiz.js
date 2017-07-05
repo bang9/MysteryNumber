@@ -42,11 +42,14 @@ class Quiz extends Component {
     }
 
     render() {
-        let fName = this.state.answer.familyName
-        let gName = this.state.answer.givenName;
         let fullName = ""
-        if(fName!=null) fullName+=fName
-        if(gName!=null) fullName+=gName
+        if(this.state.answer!=null) {
+            let fName = this.state.answer.familyName
+            let gName = this.state.answer.givenName;
+            fullName = ""
+            if (fName != null) fullName += fName
+            if (gName != null) fullName += gName
+        }
 
         return (
             <View style={{flex:1}}>
@@ -103,30 +106,37 @@ class Quiz extends Component {
     }
 
     getQuizItem () {
-        if(global.selectedContacts.length==0){
-            console.log("asdfljasdlfjlsdfj;lasdjf;")
+        if (global.selectedContacts.length == 0) {
+            Alert.alert(
+                '알림',
+                '선택 화면으로 돌아갑니다.',
+                [
+                    {text: '네', onPress: () => Actions.pop()},
+                ]
+            );
         }
+        else {
+            let tmpAnswer = [];
+            let rnd = Math.floor(Math.random() * global.selectedContacts.length);
+            let choiceAnswer = global.selectedContacts[rnd];
+            tmpAnswer.push(global.selectedContacts[rnd]);
+            global.selectedContacts.splice(rnd, 1)
 
-        let tmpAnswer = [];
-        let rnd =Math.floor(Math.random() * global.selectedContacts.length);
-        let choiceAnswer = global.selectedContacts[rnd];
-        tmpAnswer.push(global.selectedContacts[rnd]);
-        global.selectedContacts.splice(rnd,1)
+            for (var i = 0; i < 2; i++) {
+                var num = Math.floor(Math.random() * global.allContacts.length);
+                tmpAnswer.push(global.allContacts[num]);
+            }
 
-        for(var i =0; i<2; i++) {
-            var num = Math.floor(Math.random() * global.allContacts.length);
-            tmpAnswer.push(global.allContacts[num]);
+            let choice = [];
+
+            for (var i = 0; i < 3; i++) {
+                var num = Math.floor(Math.random() * tmpAnswer.length);
+                choice.push(tmpAnswer[num]);
+                tmpAnswer.splice(num, 1);
+            }
+
+            this.setState({quizList: choice, answer: choiceAnswer});
         }
-
-        let choice = [];
-
-        for (var i = 0; i < 3; i++) {
-             var num = Math.floor(Math.random() * tmpAnswer.length);
-             choice.push(tmpAnswer[num]);
-             tmpAnswer.splice(num,1);
-         }
-
-         this.setState({quizList:choice, answer:choiceAnswer});
     }
 }
 

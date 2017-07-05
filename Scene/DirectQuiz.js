@@ -39,11 +39,13 @@ class DirectQuiz extends Component {
     }
 
     render() {
-        let fName = this.state.answer.familyName
-        let gName = this.state.answer.givenName
-        let fullName = ""
-        if(fName!=null) fullName+=fName
-        if(gName!=null) fullName+=gName
+        let fullName=''
+        if(this.state.answer!=null) {
+            let fName = this.state.answer.familyName
+            let gName = this.state.answer.givenName
+            if (fName != null) fullName += fName
+            if (gName != null) fullName += gName
+        }
         return (
             <View style={{flex:1}}>
                 <View style={{justifyContent:'center',alignItems:'center',flex:1}}>
@@ -98,33 +100,35 @@ class DirectQuiz extends Component {
     }
 
     getQuizItem () {
-        if(global.directSeletedContacts.length==0){
-            console.log("asdfljasdlfjlsdfj;lasdjf;")
+        if(global.directSelectedContacts.length==0){
+            Alert.alert(
+                '알림',
+                '선택 화면으로 돌아갑니다.',
+                [
+                    {text: '네', onPress: () => Actions.pop()},
+                ]
+            );
+        }else {
+            let tmpAnswer = [];
+            let rnd = Math.floor(Math.random() * global.directSelectedContacts.length);
+            let choiceAnswer = global.directSelectedContacts[rnd];
+            tmpAnswer.push(choiceAnswer);
+            global.directSelectedContacts.splice(rnd, 1);
+
+            for (var i = 0; i < 2; i++) {
+                var num = Math.floor(Math.random() * global.allContacts.length);
+                tmpAnswer.push(global.allContacts[num]);
+            }
+
+            let choice = []; //3 choice Menu
+
+            for (var i = 0; i < 3; i++) {
+                var num = Math.floor(Math.random() * tmpAnswer.length);
+                choice.push(tmpAnswer[num]);
+                tmpAnswer.splice(num, 1);
+            }
+            this.setState({quizList: choice, answer: choiceAnswer});
         }
-
-        let tmpAnswer = [];
-        let rnd =Math.floor(Math.random() * global.directSeletedContacts.length);
-        let choiceAnswer =global.directSeletedContacts[rnd];
-        tmpAnswer.push(global.directSeletedContacts[rnd]);
-
-        global.directSeletedContacts.splice(rnd,1);
-
-        for(var i =0; i<2; i++) {
-            var num = Math.floor(Math.random() * global.allContacts.length);
-            tmpAnswer.push(global.allContacts[num]);
-        }
-
-        let choice = [];
-
-        for (var i = 0; i < 3; i++) {
-            var num = Math.floor(Math.random() * tmpAnswer.length);
-
-            choice.push(tmpAnswer[num]);
-            tmpAnswer.splice(num,1);
-
-        }
-
-        this.setState({quizList:choice, answer:choiceAnswer});
     }
 }
 
