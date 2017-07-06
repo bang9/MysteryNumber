@@ -41,8 +41,8 @@ class App extends Component {
 
                 <Scene key="root" >
                     <Scene
-                        key="main"
-                        component={Main}
+                        key="test"
+                        component={Test}
                         hideNavBar={true}
                         sceneStyle ={{marginTop:0}}
                         initial={true}

@@ -16,14 +16,15 @@ class Test extends Component{
     constructor(props){
         super(props)
         this.state= {
-            uid: null,
-            name: null,
-            age: null,
+            author: null,
+            title: null,
+            body: null,
+            comments:null,
+            key :null,
+            temp : []
         }
     }
-    componentWillMount(){
-        this.getUserId("user1");
-    }
+
 
     render(){
         return(
@@ -31,30 +32,38 @@ class Test extends Component{
                 <View style={{width:200}}>
                 <TextInput
                     onChangeText={(text)=>this.setState({
-                        uid:text
+                        author:text
                     })}
-                    placeholder="uid"
+                    placeholder="author"
                     style={{textAlign:'center'}}
                 />
                 <TextInput
                     onChangeText={(text)=>this.setState({
-                        name:text
+                        title:text
                     })}
-                    placeholder="name"
+                    placeholder="title"
                     style={{textAlign:'center'}}
                 />
                 <TextInput
                     onChangeText={(text)=>this.setState({
-                        age:text
+                        body:text
                     })}
-                    placeholder="age"
+                    placeholder="body"
                     style={{textAlign:'center'}}
                 />
-                </View>
+                <TextInput
+                    onChangeText={(text)=>this.setState({
+                        comments:text
+                    })}
+                    placeholder="comments"
+                    style={{textAlign:'center'}}
+                />
+            </View>
+
                 <Button
                     title="저장"
                     color="#6699fb"
-                    onPress={()=>this.saveData(this.state.name,this.state.age)}/>
+                    onPress={()=>this.saveData(this.state.author,this.state.title,this.state.body,this.state.comments)}/>
                 <Button
                     title="불러오기"
                     color="#6699fb"
@@ -68,36 +77,52 @@ class Test extends Component{
 
         );
     }
-    getUserId(uid){
-        this.setState({uid:uid})
+
+    saveData(author,title,body,comments){
+        var postData = {
+            author: author,
+            body: body,
+            title: title,
+            comments:comments,
+        };
+
+        var newPostKey = firebase.database().ref().child('posts').push().key;
+        this.setState({key:newPostKey})
+        var updates = {};
+        updates['/posts/' + newPostKey] = postData;
+
+        firebase.database().ref('/users-posts/').once('value',
+            (ret)=>{
+                alert(JSON.stringify(ret.val()))
+                if(ret.val() != null){
+                    let x =ret.val()
+                    x.push(this.state.key)
+                    this.setState({temp : x})
+                    firebase.database().ref('/users-posts/').update(x)
+                }else{
+                    let x = []
+                    x.push(this.state.key)
+                    this.setState({temp : x})
+                    firebase.database().ref('/users-posts/').update(x)
+
+                }
+            })
+        return firebase.database().ref().update(updates);
     }
 
-    saveData(name,age){
-        firebase.database().ref('/users/'+this.state.uid).update({
-            name:name,
-            age:age,
-        })
-    }
     loadData(){
-        firebase.database().ref('/users/'+this.state.uid).once('value')
-            .then(
-                (ret)=>{
+        firebase.database().ref('posts/'+this.state.key).once('value', (ret)=>{
                     if(ret!=null) alert(JSON.stringify(ret.val()));
                     else alert("데이터가 없습니다.")
-                }
-            ).done()
-    }
-    removeData(){
-        firebase.database().ref('/users/'+this.state.uid).remove()
-    }
-}
-class PostContainer extends Component{
-    render(){
-        return(
-            <View>
+                }).done()
 
-            </View>
-        )
+    }
+
+    removeData(){
+        var x = this.state.temp.length-1;
+        firebase.database().ref('/posts/'+this.state.temp[x]).remove()
+        firebase.database().ref('/users-posts/'+x).remove()
+        this.state.temp.splice(x,1)
     }
 }
 

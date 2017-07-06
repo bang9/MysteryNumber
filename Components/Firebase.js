@@ -3,12 +3,12 @@
  */
 import * as firebase from 'firebase';
 const config = {
-    apiKey: "AIzaSyCjXOrUqSZjVl2NZGi5P-YXQ6d0rceOuk0",
-    authDomain: "mysterynumber-87644.firebaseapp.com",
-    databaseURL: "https://mysterynumber-87644.firebaseio.com",
-    projectId: "mysterynumber-87644",
-    storageBucket: "mysterynumber-87644.appspot.com",
-    messagingSenderId: "426058848472"
+    apiKey: "AIzaSyBMUrSDNS9noOlx4T1iFRE7vlLw1YGqIr4",
+    authDomain: "mysterynumber-77315.firebaseapp.com",
+    databaseURL: "https://mysterynumber-77315.firebaseio.com",
+    projectId: "mysterynumber-77315",
+    storageBucket: "mysterynumber-77315.appspot.com",
+    messagingSenderId: "567194010575"
 };
 firebase.initializeApp(config);
 export default firebase;
