@@ -62,15 +62,15 @@ class Test extends Component{
 
                 <Button
                     title="저장"
-                    color="#6699fb"
+                    color="#7799fb"
                     onPress={()=>this.saveData(this.state.author,this.state.title,this.state.body,this.state.comments)}/>
                 <Button
                     title="불러오기"
-                    color="#6699fb"
+                    color="#7799fb"
                     onPress={()=>this.loadData()}/>
                 <Button
                     title="삭제하기"
-                    color="#6699fb"
+                    color="#7799fb"
                     onPress={()=>this.removeData()}/>
             </View>
 
