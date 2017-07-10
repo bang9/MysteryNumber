@@ -31,14 +31,16 @@ class SelectedItem extends Component {
 
     render() {
         return (
-            <View style={styles.selectedContainer}>
+            <View >
                 <TouchableOpacity
-                    onPress = {()=> this.onChange(this.props.select(this.state.isSelected))} style={{width:width, backgroundColor:this.state.isSelected?'#cccccc':'#ffffff'}}>
-                    <View style={{flex:1,alignItems:'flex-start'}}>
-                        <Text style={{fontSize:16, marginLeft:17, fontWeight:'400',color:'black'}}>{this.props.name}</Text>
-                    </View>
-                    <View style={{flex:1,alignItems:'flex-end'}}>
-                        <Text style={{marginRight:17}}>{this.props.number}</Text>
+                    onPress = {()=> this.onChange(this.props.select(this.state.isSelected))} style={{width:width, backgroundColor:this.state.isSelected?'#d1eaff':'#ffffff'}}>
+                    <View style={styles.selectedContainer}>
+                        <View style={{flex:1,alignItems:'flex-start'}}>
+                            <Text style={{fontSize:16, marginLeft:17, fontWeight:'400',color:'black'}}>{this.props.name}</Text>
+                        </View>
+                        <View style={{flex:1,alignItems:'flex-end'}}>
+                            <Text style={{marginRight:17}}>{this.props.number}</Text>
+                        </View>
                     </View>
                 </TouchableOpacity>
             </View>
@@ -62,7 +64,8 @@ const styles = StyleSheet.create({
         flex:1,
         height:60,
         borderColor:'#dddf',
-        borderWidth:0.3,alignItems:'center',
+        borderWidth:0.3,
+        alignItems:'center',
         flexDirection:'row'
     }
 });

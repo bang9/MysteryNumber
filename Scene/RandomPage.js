@@ -1,38 +1,24 @@
-/**
- * Created by mycom on 2017-06-28.
- */
-import React, { Component } from 'react';
-import {
-    StyleSheet,
-    Text,
-    View,
-    Dimensions,
-    FlatList,
-    ScrollView,
-    Alert,
-    RefreshControl
-} from 'react-native';
-import Router from "react-native-router-flux/src/Router";
-import Contacts from "react-native-contacts"
-import { Actions } from 'react-native-router-flux';
+import React, {Component} from "react";
+import {Alert, Dimensions, FlatList, RefreshControl, ScrollView, StyleSheet, Text, View,TouchableOpacity} from "react-native";
+import {Actions} from 'react-native-router-flux'
 import Button from "../Components/Button";
 const{width,height} = Dimensions.get("window");
-/**
- * Created by mycom on 2017-06-28.
- */
 
 class RandomPage extends Component {
     constructor(props) {
         super(props);
-        this.state=
-            {
-                contacts : null,
-                selectedList : [],
-                refreshing:false,
-            }
+        this.state = {
+            refreshing:false,
+            selectedContacts:[],
+        }
     }
+
     componentWillMount(){
-        this.getContact();
+        this.getRandomData();
+    }
+
+    componentDidMount(){
+        Actions.refresh({renderRightButton:()=>this.goQuiz("확인")})
     }
 
     render() {
@@ -50,13 +36,10 @@ class RandomPage extends Component {
                     color="#488aff"
                 />
                 <FlatList
-                    data={this.state.selectedList}
-                    renderItem={({item}) => item.phoneNumbers[0] != null ?
-                    <SelectedItem name={this.reNaming(item)} number={item.phoneNumbers[0].number}/>
-                    :
-                    null}
-                    keyExtractor={item=>item.givenName} // keyExtractor -> inform each of items primary key
-                    />
+                    data={this.state.selectedContacts}
+                    renderItem={ ({item}) =>  <SelectedItem name={item.name} number={item.number}/> }
+                    keyExtractor={ item=>item.number } // keyExtractor -> inform each of items primary key
+                />
             </ScrollView>
         );
     }
@@ -64,41 +47,28 @@ class RandomPage extends Component {
     //function Lists
     _onRefresh(){
         this.setState({refreshing: true});
-        this.selectData();
+        this.getRandomData();
     }
 
-    getContact() {
-        Contacts.getAll((err, contact) => {
-            console.log("Contact.getAll");
-            if (err === 'denied') {
-                Alert.alert("error");
-            } else {
-                this.setState({contacts:contact})
-                global.allContacts = contact;
-                this._onRefresh();
-            }
-        })
-    }
-
-    reNaming(item){
-        let fName = item.familyName
-        let gName = item.givenName
-        let fullName = ""
-        if(fName!=null) fullName+=fName
-        if(gName!=null) fullName+=gName
-        return fullName
-    }
-
-    selectData(){
+    getRandomData(){
         let selectedContacts = [];                          // Selected data Array
-        let tmpContacts = this.state.contacts.slice();   // Copy contacts
-        for(var i=0; i<30; i++) {
+        let tmpContacts = global.contactList.slice();     // Copy all contacts
+        for(var i=0; i<10; i++) {
             let rnd = Math.floor(Math.random()*tmpContacts.length); // Get random index
-            selectedContacts.push(tmpContacts[rnd]);                  // Push selected data to Array
-            tmpContacts.splice(rnd,1);                                // Remove selected data at tmpContacts
+            selectedContacts.push(tmpContacts[rnd]);                   // Push selected data to Array
+            tmpContacts.splice(rnd,1);                                 // Remove selected data at tmpContacts
         }
-        global.selectedContacts = selectedContacts;                // Update global selected data
-        this.setState({selectedList:selectedContacts,refreshing: false});            // Set state for new data
+        this.setState({selectedContacts:selectedContacts,refreshing: false});   // Set state for new data
+    }
+
+    goQuiz(){
+        return (
+            <TouchableOpacity
+                onPress={()=>{Actions.quiz({list:this.state.selectedContacts})}}
+                style={{justifyContent:'center', width:50,bottom:11,height:40}}>
+                <Text style={{color:'white', fontSize:16, textAlign:'right'}}>확인</Text>
+            </TouchableOpacity>
+        );
     }
 }
 
