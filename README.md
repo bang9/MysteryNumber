@@ -1,51 +1,61 @@
 # MysteryNumber
-Signed APK ¸¸µé±â
-Google Play Store¿¡ ¹èÆ÷ÇØº¸ÀÚ.
 
-¸ÕÀú signed release APK¸¦ ¸¸µé¾î¾ß ÇÑ´Ù.
+Signed APK ë§Œë“¤ê¸°
+Google Play Storeì— ë°°í¬í•´ë³´ì.
 
-sining key ¸¸µé±â
-keytool·Î private signing key¸¦ ¸¸µç´Ù.
-keytool.exe´Â JDK¸¦ ¼³Ä¡ÇÑ bin Æú´õ¿¡ ÀÖÀ½ (C:\Program Files\Java\jdk1.8.0_121\bin)
-ÀÚ¹Ù´Â 'Å° ÀúÀå¼Ò'¸¦ ´ÜÀÏ ÆÄÀÏ ¾È¿¡¼­ °ü¸®ÇÏ°í ÀÖ´Ù.
-ÇöÀç Å° ÀúÀå¼Ò¿¡ ´ã°ÜÀÖ´Â Å°¸¦ È®ÀÎÇÏ·Á¸é keytool -list·Î È®ÀÎÇÑ´Ù.
-keytool ¿À·ù: java.lang.Exception: Å° ÀúÀå¼Ò ÆÄÀÏÀÌ Á¸ÀçÇÏÁö ¾ÊÀ½: ...\.keystore
-ÇÑ¹øµµ Å°¸¦ ¸¸µçÀûÀÌ ¾øÀ¸¸é Å° ÀúÀå¼Òµµ ¾ø°í Å°µµ ¾ø´Ù.
-±×·³ Å° ÀúÀå¼Ò´Â ¾î¶»°Ô ¸¸µå³ª? Å° ÀúÀå¼Ò¸¸ ¸¸µå´Â ¹æ¹ıÀº ¾ø°í ÃÖÃÊ·Î Å°¸¦ ¸¸µé¸é ÀúÀå¼Òµµ ÀÚµ¿À¸·Î »ı±ä´Ù.
-ÀÚ ±×·³ keytool -genkey·Î Å°¸¦ ¸¸µé¾î º¸ÀÚ.
+ë¨¼ì € signed release APKë¥¼ ë§Œë“¤ì–´ì•¼ í•œë‹¤.
 
+## 1. Signing key ìƒì„±
+
+Keytoolë¡œ Private Signing keyë¥¼ ë§Œë“ ë‹¤.
+keytool.exeëŠ” JDKë¥¼ ì„¤ì¹˜í•œ biní´ë”ì— ìˆìŒ (C:\Program Files\Java\jdk1.8.0_121\bin)
+
+ìë°”ëŠ” 'í‚¤ ì €ì¥ì†Œ'ë¥¼ ë‹¨ì¼ íŒŒì¼ ì•ˆì—ì„œ ê´€ë¦¬í•˜ê³  ìˆë‹¤.
+í˜„ì¬ í‚¤ ì €ì¥ì†Œì— ë‹´ê²¨ìˆëŠ” í‚¤ë¥¼ í™•ì¸í•˜ë ¤ë©´ keytool -listë¡œ í™•ì¸í•œë‹¤.
+keytool ì˜¤ë¥˜: java.lang.Exception: í‚¤ ì €ì¥ì†Œ íŒŒì¼ì´ ì¡´ì¬í•˜ì§€ ì•ŠìŒ: ...\.keystore
+í•œë²ˆë„ í‚¤ë¥¼ ë§Œë“ ì ì´ ì—†ìœ¼ë©´ í‚¤ ì €ì¥ì†Œë„ ì—†ê³  í‚¤ë„ ì—†ë‹¤.
+ê·¸ëŸ¼ í‚¤ ì €ì¥ì†ŒëŠ” ì–´ë–»ê²Œ ë§Œë“œë‚˜? í‚¤ ì €ì¥ì†Œë§Œ ë§Œë“œëŠ” ë°©ë²•ì€ ì—†ê³  ìµœì´ˆë¡œ í‚¤ë¥¼ ë§Œë“¤ë©´ ì €ì¥ì†Œë„ ìë™ìœ¼ë¡œ ìƒê¸´ë‹¤.
+
+ì ê·¸ëŸ¼ keytool -genkeyë¡œ í‚¤ë¥¼ ë§Œë“¤ì–´ ë³´ì.
+
+```
 $ keytool -genkey -v -keystore my-release-key.keystore -alias my-key-alias -keyalg RSA -keysize 2048 -validity 10000
+```
 
-ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇÏ°í ¸ğµÎ ¿£ÅÍ¸¸ ÃÄ¼­ skip
+ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ê³  ëª¨ë‘ ì—”í„°ë§Œ ì³ì„œ skip
 
-´ÙÀ½¿¡ ´ëÇØ À¯È¿ ±â°£ÀÌ 10,000ÀÏÀÎ 2,048ºñÆ® RSA Å° ½Ö ¹× ÀÚÃ¼ ¼­¸íµÈ ÀÎÁõ¼­(SHA256withRSA)¸¦ »ı¼ºÇÏ´Â Áß
+ë‹¤ìŒì— ëŒ€í•´ ìœ íš¨ ê¸°ê°„ì´ 10,000ì¼ì¸ 2,048ë¹„íŠ¸ RSA í‚¤ ìŒ ë° ìì²´ ì„œëª…ëœ ì¸ì¦ì„œ(SHA256withRSA)ë¥¼ ìƒì„±í•˜ëŠ” ì¤‘
         : CN=Unknown, OU=Unknown, O=Unknown, L=Unknown, ST=Unknown, C=Unknown
-<my-key-alias>¿¡ ´ëÇÑ Å° ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇÏ½Ê½Ã¿À.
-        (Å° ÀúÀå¼Ò ºñ¹Ğ¹øÈ£¿Í µ¿ÀÏÇÑ °æ¿ì Enter Å°¸¦ ´©¸§):
+<my-key-alias>ì— ëŒ€í•œ í‚¤ ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì‹­ì‹œì˜¤.
+        (í‚¤ ì €ì¥ì†Œ ë¹„ë°€ë²ˆí˜¸ì™€ ë™ì¼í•œ ê²½ìš° Enter í‚¤ë¥¼ ëˆ„ë¦„):
 
-¸¶Áö¸· ¿£ÅÍ¸¦ Ä¡¸é my-release-key.keystore ÆÄÀÏÀÌ »ı¼ºµÈ´Ù.
-(À§ÀÇ ¿¹¿¡¼­´Â keystore¸¦ Á÷Á¢ 1È¸¼ºÀ¸·Î ÁöÁ¤ÇßÀ¸¹Ç·Î ´Ù½Ã keytool -list ÇØºÁµµ ÀúÀå¼Ò´Â ¾ø´Ù.)
+ë§ˆì§€ë§‰ ì—”í„°ë¥¼ ì¹˜ë©´ my-release-key.keystore íŒŒì¼ì´ ìƒì„±ëœë‹¤.
+(ìœ„ì˜ ì˜ˆì—ì„œëŠ” keystoreë¥¼ ì§ì ‘ 1íšŒì„±ìœ¼ë¡œ ì§€ì •í–ˆìœ¼ë¯€ë¡œ ë‹¤ì‹œ keytool -list í•´ë´ë„ ì €ì¥ì†ŒëŠ” ì—†ë‹¤.)
 
-ÀÌ keystore ÆÄÀÏÀº 10,000ÀÏ µ¿¾È »ç¿ë°¡´ÉÇÑ single key¸¦ °¡Áö°í ÀÖ´Ù.
-ailas°¡ ³ªÁß¿¡ ¾ÛÀ» signing ÇÒ¶§ »ç¿ëÇÒ ÀÌ¸§ÀÌ´Ï Àß ±â¾ïÇØµÎÀÚ.
+ì´ keystore íŒŒì¼ì€ 10,000ì¼ ë™ì•ˆ ì‚¬ìš©ê°€ëŠ¥í•œ single keyë¥¼ ê°€ì§€ê³  ìˆë‹¤.
+ailasê°€ ë‚˜ì¤‘ì— ì•±ì„ signing í• ë•Œ ì‚¬ìš©í•  ì´ë¦„ì´ë‹ˆ ì˜ ê¸°ì–µí•´ë‘ì.
 
-keystore ÆÄÀÏÀº privateÇÏ°Ô À¯ÁöÇØ¾ß ÇÔ. version control¿¡ ¿Ã¸®Áö ¸»°Í!
+keystore íŒŒì¼ì€ privateí•˜ê²Œ ìœ ì§€í•´ì•¼ í•¨. version controlì— ì˜¬ë¦¬ì§€ ë§ê²ƒ!
 
-gradle º¯¼ö ¼³Á¤
-- À§ keystoreÆÄÀÏÀ» android/app Æú´õ¿¡ º¹»ç
-- android/gradle.properties ÆÄÀÏ¾Æ·¡ ³»¿ë Ãß°¡ÇÏ°í ÀúÀå
+gradle ë³€ìˆ˜ ì„¤ì •
+- ìœ„ keystoreíŒŒì¼ì„ android/app í´ë”ì— ë³µì‚¬
+- android/gradle.properties íŒŒì¼ì•„ë˜ ë‚´ìš© ì¶”ê°€í•˜ê³  ì €ì¥
 
+```
 MYAPP_RELEASE_STORE_FILE=my-release-key.keystore
 MYAPP_RELEASE_KEY_ALIAS=my-key-alias
 MYAPP_RELEASE_STORE_PASSWORD=*****
 MYAPP_RELEASE_KEY_PASSWORD=*****
+```
 
-- º°Ç¥´Â ¾Æ±î ÀÔ·ÂÇÑ ºñ¹Ğ¹øÈ£
-- ÀÌ °ªµéÀº ³ªÁß¿¡ ¿ì¸® app signing½Ã »ç¿ëÇÒ global gradle º¯¼ö
-- Play Store¿¡ ÇÑ¹ø ¹èÆ÷ÇÑ »óÅÂ¿¡¼­ signing key¸¦ ¹Ù²Ù°í ½Í´Ù¸é ´Ù¸¥ ÆĞÅ°Áö ÀÌ¸§À¸·Î Àç¹èÆ÷ÇØ¾ß ÇÔ. (´Ù¸¥ ÆĞÅ°Áö¸íÀ» ÀÔ·ÂÇÑ´Ù´Â °ÍÀº ´Ù¿î·Îµå È½¼ö¿Í º°Á¡ Á¤º¸´Ù ³¯¾Æ°£´Ù´Â ¶æ!) ±×·¯´Ï ÀÌ keystore ÆÄÀÏÀ» Àß º¸°üÇÒ °Í!!
+- ë³„í‘œëŠ” ì•„ê¹Œ ì…ë ¥í•œ ë¹„ë°€ë²ˆí˜¸
+- ì´ ê°’ë“¤ì€ ë‚˜ì¤‘ì— ìš°ë¦¬ app signingì‹œ ì‚¬ìš©í•  global gradle ë³€ìˆ˜
+- Play Storeì— í•œë²ˆ ë°°í¬í•œ ìƒíƒœì—ì„œ signing keyë¥¼ ë°”ê¾¸ê³  ì‹¶ë‹¤ë©´ ë‹¤ë¥¸ íŒ¨í‚¤ì§€ ì´ë¦„ìœ¼ë¡œ ì¬ë°°í¬í•´ì•¼ í•¨. (ë‹¤ë¥¸ íŒ¨í‚¤ì§€ëª…ì„ ì…ë ¥í•œë‹¤ëŠ” ê²ƒì€ ë‹¤ìš´ë¡œë“œ íšŸìˆ˜ì™€ ë³„ì  ì •ë³´ë‹¤ ë‚ ì•„ê°„ë‹¤ëŠ” ëœ»!) ê·¸ëŸ¬ë‹ˆ ì´ keystore íŒŒì¼ì„ ì˜ ë³´ê´€í•  ê²ƒ!!
 
-appÀÇ gradle config¿¡¼­ signing config ¼³Á¤
-- android/app/build.gradle ÆÄÀÏ ¼öÁ¤
+appì˜ gradle configì—ì„œ signing config ì„¤ì •
+- android/app/build.gradle íŒŒì¼ ìˆ˜ì •
+
+```
 ...
 android {
     ...
@@ -65,44 +75,39 @@ android {
         }
     }
 }
-...
+```
 
-release APK »ı¼º
-- android/app Æú´õ¿¡ react.gradle ÆÄÀÏÀÌ ¾ø´Ù¸é
+release APK ìƒì„±
+- android/app í´ë”ì— react.gradle íŒŒì¼ì´ ì—†ë‹¤ë©´
+```
 $ mkdir -p android/app/src/main/assets
 $ react-native bundle --platform android --dev false --entry-file index.android.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/
 $ cd android
 $ ./gradlew assembleRelease
+```
 
-> ¸¶Áö¸· assembleRelease±îÁö ÇÏ¸é ÀÌÁ¦ ¹èÆ÷°¡ °¡´ÉÇÑ.. android/app/build/outputs/apk/app-release.apk ¶ó´Â apk ÆÄÀÏÀÌ »ı±ä´Ù.
+ë§ˆì§€ë§‰ assembleReleaseê¹Œì§€ í•˜ë©´ android/app/build/outputs/apk/app-release.apk ë¼ëŠ” apk íŒŒì¼ì´ ìƒê¸´ë‹¤.
+ì•±ì„ ì„¤ì¹˜í•˜ë ¤ë©´ rootì—ì„œ ë‹¤ìŒê³¼ ê°™ì´ ëª…ë ¹ì–´ ì…ë ¥
 
-¼º°ø~!
+```
+cd android && gradlew installRelease
+```
 
-release APK Å×½ºÆ®
-»ó¿ë ¹èÆ÷ Àü¿¡ Å×½ºÆ®¸¦ ºı½Ã°Ô ÇØºÁ¾ß ÇÒ °ÍÀÌ´Ù.
-±âÁ¸ Å×½ºÆ®¿ë apk´Â Áö¿ì°í ¾Æ·¡ ¸í·É¾î¸¦ ½ÇÇàÇÏÀÚ.
-
-cd android
-./gradlew installRelease
-
-¾ÛÀÌ Àß ±ò¸°´Ù.
-
-¼º°ø~!
-
-Proguard·Î APK Å©±â ÁÙÀÌ±â (¿É¼Ç)
-¿É¼ÇÀ» Àû¿ëÇÏÁö ¾ÊÀº °æ¿ì apk´Â 7,479KBÀÌ´Ù.
-Proguard´Â APKÀÇ Å©±â¸¦ »ìÂ¦ ÁÙ¿©ÁØ´Ù. (»ç¿ëÇÏÁö ¾Ê´Â ÄÚµå¸¦ Á¦°ÅÇÑ´Ù.)
-Proguard´Â °¡²û library º°·Î ¼³Á¤ÀÌ ÇÊ¿äÇÏ´Ù°í ÇÑ´Ù. ? ¹ºÁö Àß ¸ğ¸£°ÚÀ½.
-android/app/build.gradle¿¡¼­ ¾Æ·¡ ¿É¼ÇÀ» true·Î º¯°æÇÏ¸é µÈ´Ù.
+Proguardë¡œ APK í¬ê¸° ì¤„ì´ê¸° (ì˜µì…˜)
+ì˜µì…˜ì„ ì ìš©í•˜ì§€ ì•Šì€ ê²½ìš° apkëŠ” 7,479KBì´ë‹¤.
+ProguardëŠ” APKì˜ í¬ê¸°ë¥¼ ì‚´ì§ ì¤„ì—¬ì¤€ë‹¤. (ì‚¬ìš©í•˜ì§€ ì•ŠëŠ” ì½”ë“œë¥¼ ì œê±°)
+ProguardëŠ” ê°€ë” library ë³„ë¡œ ì„¤ì •ì´ í•„ìš”í•˜ë‹¤ê³  í•œë‹¤.
+android/app/build.gradleì—ì„œ ì•„ë˜ ì˜µì…˜ì„ trueë¡œ ë³€ê²½í•˜ë©´ ëœë‹¤.
+```
     buildTypes {
         release {
             ...
             minifyEnabled true
         }
     }
+```
 
-
-------------FIRE BASE Âü°í
+------------FIRE BASE ì°¸ê³ 
 
 https://medium.com/react-native-development/build-a-chat-app-with-firebase-and-redux-part-1-8a2197fb0f88
 https://medium.com/@jamesmarino/getting-started-with-react-native-and-firebase-ab1f396db549
