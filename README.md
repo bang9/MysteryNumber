@@ -62,10 +62,10 @@ android {
     defaultConfig { ... }
     signingConfigs {
         release {
-            storeFile file(MYAPP_RELEASE_STORE_FILE)
-            storePassword MYAPP_RELEASE_STORE_PASSWORD
-            keyAlias MYAPP_RELEASE_KEY_ALIAS
-            keyPassword MYAPP_RELEASE_KEY_PASSWORD
+            storeFile     file(APP_RELEASE_STORE_FILE)
+            keyAlias      APP_RELEASE_KEY_ALIAS
+            storePassword APP_RELEASE_STORE_PASSWORD
+            keyPassword   APP_RELEASE_KEY_PASSWORD
         }
     }
     buildTypes {
@@ -81,7 +81,7 @@ release APK 생성
 - android/app 폴더에 react.gradle 파일이 없다면
 ```
 $ mkdir -p android/app/src/main/assets
-$ react-native bundle --platform android --dev false --entry-file index.android.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/
+$ react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/
 $ cd android
 $ ./gradlew assembleRelease
 ```
