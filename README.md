@@ -42,10 +42,10 @@ gradle 변수 설정
 - android/gradle.properties 파일아래 내용 추가하고 저장
 
 ```
-MYAPP_RELEASE_STORE_FILE=my-release-key.keystore
-MYAPP_RELEASE_KEY_ALIAS=my-key-alias
-MYAPP_RELEASE_STORE_PASSWORD=*****
-MYAPP_RELEASE_KEY_PASSWORD=*****
+APP_RELEASE_STORE_FILE=my-release-key.keystore
+APP_RELEASE_KEY_ALIAS=my-key-alias
+APP_RELEASE_STORE_PASSWORD=*****
+APP_RELEASE_KEY_PASSWORD=*****
 ```
 
 - 별표는 아까 입력한 비밀번호
